@@ -1,0 +1,64 @@
+/** Copyright 2019 Sakis Gkiokas
+ * This file is part of sakgiok_skroutzhelper module for Prestashop.
+ *
+ * Sakgiok_skroutzhelper is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Sakgiok_skroutzhelper is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * For any recommendations and/or suggestions please contact me
+ * at sakgiok@gmail.com
+ *
+ *  @author    Sakis Gkiokas <sakgiok@gmail.com>
+ *  @copyright 2019 Sakis Gkiokas
+ *  @license   https://opensource.org/licenses/GPL-3.0  GNU General Public License version 3
+ */
+
+.sg_skroutzhelper_help_title{
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 2em;
+    border-top: 1px solid #a9b8bd;
+    padding-top: 1.5em;
+}
+.sg_skroutzhelper_help_body{
+    font-weight: normal;
+    font-size: 1em;
+}
+
+.sg_skroutzhelper_update_title_success{
+    color: #007b00;
+}
+.sg_skroutzhelper_update_title_current{
+    color: #3b3bfb;
+}
+.sg_skroutzhelper_update_title_error{
+    color: #c70000;
+}
+.sg_skroutzhelper_update{
+
+}
+.sg_skroutzhelper_update_out_current{
+    color: #3b3bfb;
+    margin: 0 0 1em 0;
+}
+.sg_skroutzhelper_update_out_success{
+    color: #007b00;
+    margin: 0 0 1em 0;
+}
+.sg_skroutzhelper_update_out_error{
+    color: #c70000;
+    margin: 0 0 1em 0;
+}
+.sg_skroutzhelper_update_form{
+    margin: 0 0 1em 0;
+}
+.sg_skroutzhelper_update_form button{
+    height: 3em;
+    width: 20em;
+}
