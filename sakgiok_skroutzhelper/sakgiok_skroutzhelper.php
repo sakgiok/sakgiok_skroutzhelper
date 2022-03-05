@@ -23,8 +23,7 @@
 if (!defined('_PS_VERSION_'))
     exit;
 
-class sakgiok_skroutzhelper extends Module
-{
+class sakgiok_skroutzhelper extends Module {
 
     protected $_html = '';
     protected $_out_xml = '';
@@ -39,14 +38,13 @@ class sakgiok_skroutzhelper extends Module
     private $debug_mode = false;
     public $is17 = false;
 
-    public function __construct()
-    {
+    public function __construct() {
         if (Tools::version_compare(_PS_VERSION_, '1.7.0', '>=')) {
             $this->is17 = true;
         }
         $this->name = 'sakgiok_skroutzhelper';
         $this->tab = 'front_office_features';
-        $this->version = '1.0.0';
+        $this->version = '1.1.0';
         $this->author = 'Sakis Gkiokas';
         $this->need_instance = 0;
         $this->secure_key = Tools::encrypt($this->name);
@@ -70,8 +68,7 @@ class sakgiok_skroutzhelper extends Module
     /**
      * @see Module::install()
      */
-    public function install()
-    {
+    public function install() {
         /* Adds Module */
         $res = parent::install() &&
                 Configuration::updateValue('SAKGIOK_SKROUTZHELPER_INFO_LINK', 'https://sakgiok.gr/programs/sakgiok_skroutzhelper/') &&
@@ -91,8 +88,7 @@ class sakgiok_skroutzhelper extends Module
     /**
      * @see Module::uninstall()
      */
-    public function uninstall()
-    {
+    public function uninstall() {
         /* Deletes Module */
         $res = parent::uninstall() &&
                 Configuration::deleteByName('SAKGIOK_SKROUTZHELPER_INFO_LINK') &&
@@ -106,8 +102,7 @@ class sakgiok_skroutzhelper extends Module
         return (bool) $res;
     }
 
-    public function getContent()
-    {
+    public function getContent() {
         $this->context->controller->addCSS($this->path . 'views/css/sakgiok_skroutzhelper_admin.css');
         $this->_enableAnalytics = Configuration::get('SAKGIOK_SKROUTZHELPER_ENABLEANALYTICS');
         /* Validate & process */
@@ -138,8 +133,7 @@ class sakgiok_skroutzhelper extends Module
         return $this->_html;
     }
 
-    protected function _postProcess()
-    {
+    protected function _postProcess() {
         $received_values = Tools::getAllValues();
         foreach ($received_values as $key => $value) {
             if ($key == "sakgiok_skroutzhelper_generatexml") {
@@ -195,8 +189,7 @@ class sakgiok_skroutzhelper extends Module
         }
     }
 
-    private function renderForm_analytics()
-    {
+    private function renderForm_analytics() {
         $fields_form = array(
             'form' => array(
                 'legend' => array(
@@ -293,8 +286,7 @@ class sakgiok_skroutzhelper extends Module
         return $helper->generateForm(array($fields_form));
     }
 
-    public function getConfigAnalyticsFieldsValues()
-    {
+    public function getConfigAnalyticsFieldsValues() {
         return array(
             'sakgiok_skroutzhelper_analyticsshopid' => Configuration::get('SAKGIOK_SKROUTZHELPER_ANALYTICSSHOPID'),
             'sakgiok_skroutzhelper_enableanalytics' => Configuration::get('SAKGIOK_SKROUTZHELPER_ENABLEANALYTICS'),
@@ -303,8 +295,7 @@ class sakgiok_skroutzhelper extends Module
         );
     }
 
-    private function renderForm_createxml()
-    {
+    private function renderForm_createxml() {
         $tot_pr = $this->_getProductNum();
         $ind_pr = $this->_getProductNum(TRUE);
         $this->context->smarty->assign(array(
@@ -317,8 +308,7 @@ class sakgiok_skroutzhelper extends Module
         return $this->display(__FILE__, 'views/templates/admin/form_createxml.tpl');
     }
 
-    private function renderForm_listxml()
-    {
+    private function renderForm_listxml() {
         $langs = $this->context->controller->getLanguages();
         $xmlnames = Configuration::get('SAKGIOK_SKROUTZHELPER_FILE_LIST');
         $xml_count = 0;
@@ -357,8 +347,7 @@ class sakgiok_skroutzhelper extends Module
         return $this->display(__FILE__, 'views/templates/admin/form_listxml.tpl');
     }
 
-    private function renderForm_viewxml()
-    {
+    private function renderForm_viewxml() {
         $xmlnames_arr = explode('|', Configuration::get('SAKGIOK_SKROUTZHELPER_FILE_LIST'));
         $file_path = _PS_ROOT_DIR_ . '/' . $this->getConfFilename($xmlnames_arr[(int) $this->_viewindex]);
         $xml_content = file_get_contents($file_path);
@@ -375,8 +364,7 @@ class sakgiok_skroutzhelper extends Module
         return $this->display(__FILE__, 'views/templates/admin/form_viewxml.tpl');
     }
 
-    public function _createXML($in_filename, $in_lang = 0, $refresh = false)
-    {
+    public function _createXML($in_filename, $in_lang = 0, $refresh = false) {
 
         $f_filename = "";
         if ($refresh) {
@@ -528,8 +516,7 @@ class sakgiok_skroutzhelper extends Module
         }
     }
 
-    private function _deleteXMLFile($in_file_num)
-    {
+    private function _deleteXMLFile($in_file_num) {
         $xmlnames_arr = explode('|', Configuration::get('SAKGIOK_SKROUTZHELPER_FILE_LIST'));
         if (@unlink(_PS_ROOT_DIR_ . '/' . $this->getConfFilename($xmlnames_arr[(int) $in_file_num]))) {
             $xmlnames_arr[(int) $in_file_num] = '|';
@@ -549,8 +536,7 @@ class sakgiok_skroutzhelper extends Module
         return false;
     }
 
-    private function _getProductNum($onlyvalid = false)
-    {
+    private function _getProductNum($onlyvalid = false) {
         $sql = 'SELECT * FROM ' . _DB_PREFIX_ . 'product pr';
         if ($onlyvalid) {
             //$sql .= ' WHERE skroutz_available=1';
@@ -559,14 +545,12 @@ class sakgiok_skroutzhelper extends Module
         return count($res);
     }
 
-    public function getConfigFieldsValues()
-    {
+    public function getConfigFieldsValues() {
         $fields = array();
         return $fields;
     }
 
-    public function getConfFilename($inF)
-    {
+    public function getConfFilename($inF) {
         $out = "";
         if (strlen($inF) > 0) {
             $out = substr($inF, 0, strlen($inF) - 1);
@@ -574,8 +558,7 @@ class sakgiok_skroutzhelper extends Module
         return $out;
     }
 
-    public function getConfLang($inF)
-    {
+    public function getConfLang($inF) {
         $out = "";
         if (strlen($inF) > 0) {
             $out = substr($inF, strlen($inF) - 1);
@@ -589,8 +572,7 @@ class sakgiok_skroutzhelper extends Module
      * @param array $order The completed order to report.
      * @return string The JavaScript representation of an Analytics Ecommerce addOrder action.
      */
-    private function addOrderAction(&$order)
-    {
+    private function addOrderAction(&$order) {
         $out = '';
         if ($this->debug_mode) {
             $out = '<div>Order Data</div>';
@@ -609,8 +591,7 @@ class sakgiok_skroutzhelper extends Module
      * @param array $item The purchesed product to report, part of this order.
      * @return string The JavaScript representation of an Analytics Ecommerce addItem action.
      */
-    private function addItemAction(&$order, &$item)
-    {
+    private function addItemAction(&$order, &$item) {
         $out = '';
         $item_data_array = array(
             'order_id' => $order['order_id'],
@@ -628,8 +609,7 @@ class sakgiok_skroutzhelper extends Module
         return $out;
     }
 
-    public function hookHeader($params)
-    {
+    public function hookHeader($params) {
         $this->context->controller->addCSS($this->_path . 'views/css/sakgiok_skroutzhelper.css');
         $this->_enableAnalytics = Configuration::get('SAKGIOK_SKROUTZHELPER_ENABLEANALYTICS');
         if (!$this->_enableAnalytics)
@@ -642,8 +622,7 @@ class sakgiok_skroutzhelper extends Module
         return $this->display(__FILE__, 'views/templates/hook/header_js.tpl');
     }
 
-    public function getCODwfeeplusValues($order, $cart)
-    {
+    public function getCODwfeeplusValues($order, $cart) {
         $ret = array(
             'fee' => 0,
             'shipping' => 0,
@@ -720,8 +699,7 @@ class sakgiok_skroutzhelper extends Module
         return $ret;
     }
 
-    public function hookOrderConfirmation($params)
-    {
+    public function hookOrderConfirmation($params) {
         if (!$this->_enableAnalytics)
             return;
         if ($this->is17) {
@@ -773,6 +751,20 @@ class sakgiok_skroutzhelper extends Module
             $tax -= $codfee - $price_notax;
         }
 
+        //Get total value of products
+        $total_prod_value = 0;
+        foreach ($items as $value) {
+            if ($value['product_id'] != $cod_prod_id) {
+                $total_prod_value += Tools::ps_round((float) $value['unit_price_tax_incl'], 2) * $value['product_quantity'];
+            }
+        }
+
+        //discount factor for products
+        $factor = (float) 1.0;
+        if ($total_prod_value > 0) {
+            $factor = (float) (($total_paid-$shipping) / $total_prod_value);
+        }
+
         $order_sa = array(
             'order_id' => $order->id,
             'revenue' => Tools::ps_round((float) $total_paid, 2),
@@ -784,11 +776,12 @@ class sakgiok_skroutzhelper extends Module
         $i = 0;
         foreach ($items as $value) {
             if ($value['product_id'] != $cod_prod_id) {
+                $new_price = Tools::ps_round((float) $value['unit_price_tax_incl'], 2) * $factor;
                 $items_sa[$i] = array(
                     'order_id' => $value['id_order'],
                     'product_id' => $value['product_id'],
                     'name' => $value['product_name'],
-                    'price' => Tools::ps_round((float) $value['unit_price_tax_incl'], 2),
+                    'price' => Tools::ps_round((float) $new_price, 2),
                     'quantity' => $value['product_quantity']
                 );
 
@@ -818,8 +811,7 @@ class sakgiok_skroutzhelper extends Module
         return $out;
     }
 
-    public function hookFooter($params)
-    {
+    public function hookFooter($params) {
         $this->_displaySkroutzLogo = Configuration::get('SAKGIOK_SKROUTZHELPER_DISPLAYLOGO');
         if (!$this->_displaySkroutzLogo)
             return;
@@ -836,8 +828,7 @@ class sakgiok_skroutzhelper extends Module
 
     //HELP FORM
 
-    public function renderHelpForm($ajax = false, $check_update = false, $hide = true)
-    {
+    public function renderHelpForm($ajax = false, $check_update = false, $hide = true) {
         $ret = '';
         $update_status = array(
             'res' => '',
@@ -889,8 +880,7 @@ class sakgiok_skroutzhelper extends Module
         return $ret;
     }
 
-    public function getUpdateStatus()
-    {
+    public function getUpdateStatus() {
         $ret = '';
         $info_var = 'SAKGIOK_SKROUTZHELPER_INFO_LINK';
         $git_var = 'SAKGIOK_SKROUTZHELPER_GITHUB_LINK';
@@ -939,8 +929,7 @@ class sakgiok_skroutzhelper extends Module
         return $ret;
     }
 
-    public function updateValueAllShops($key, $value)
-    {
+    public function updateValueAllShops($key, $value) {
         $this->storeContextShop();
         if (Shop::isFeatureActive()) {
             Shop::setContext(Shop::CONTEXT_ALL);
@@ -959,8 +948,7 @@ class sakgiok_skroutzhelper extends Module
         $this->resetContextShop();
     }
 
-    public function storeContextShop()
-    {
+    public function storeContextShop() {
         if (Shop::isFeatureActive()) {
             $this->tmp_shop_context_type = Shop::getContext();
             if ($this->tmp_shop_context_type != Shop::CONTEXT_ALL) {
@@ -973,8 +961,7 @@ class sakgiok_skroutzhelper extends Module
         }
     }
 
-    public function resetContextShop()
-    {
+    public function resetContextShop() {
         if (Shop::isFeatureActive()) {
             if ($this->tmp_shop_context_type != Shop::CONTEXT_ALL) {
                 Shop::setContext($this->tmp_shop_context_type, $this->tmp_shop_context_id);
